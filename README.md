@@ -1,4 +1,4 @@
-# Term-Project-TItus-Ryan
+# Term-Project-Titus-Ryan
 
 # Tank Shooting Game
 
