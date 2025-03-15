@@ -9,4 +9,14 @@ public class Volcanobomb extends Weapon {
         this.damageRadius = damageRadius;
         this.radius = radius;
     }
+
+    public void setDamageRadius(int damageRadius) {
+        this.damageRadius = damageRadius;
+    }
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }
