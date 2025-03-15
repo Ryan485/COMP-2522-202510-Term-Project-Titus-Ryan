@@ -10,4 +10,8 @@ public abstract class Item {
         this.name = name;
         this.itemID = itemID;
     }
+
+    public Item() {
+
+    }
 }
