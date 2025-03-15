@@ -16,6 +16,9 @@ public class TankPlayer {
         this.HP = HP;
     }
 
+    private void move() {
+
+    }
 
 
 }
