@@ -8,12 +8,6 @@ public abstract class Weapon {
         this.speed = speed;
         this.damage = damage;
     }
-
-    public int abstractDamage() {
-
-    }
-
-    public int setSpeed() {
-
-    }
+    abstract public int setDamage();
+    abstract public void setSpeed();
 }
