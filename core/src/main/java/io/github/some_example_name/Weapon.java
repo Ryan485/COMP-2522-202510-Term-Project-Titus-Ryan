@@ -9,15 +9,11 @@ public abstract class Weapon {
         this.damage = damage;
     }
 
-    private void nuclear_bomb() {
+    public int abstractDamage() {
 
     }
 
-    private void volcano_bomb() {
-
-    }
-
-    private void bouncing_bomb() {
+    public int setSpeed() {
 
     }
 }
