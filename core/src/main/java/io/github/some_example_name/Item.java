@@ -1,6 +1,6 @@
 package io.github.some_example_name;
 
-public abstract class Items {
+public abstract class Item {
     int price;
     String name;
     String itemID;
