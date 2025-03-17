@@ -1,8 +1,8 @@
 package io.github.some_example_name;
 
 public class Map {
-    String biome;
-    int wind;
+    private String biome;
+    private int wind;
 
     public Map(String biome) {
         this.biome = biome;
