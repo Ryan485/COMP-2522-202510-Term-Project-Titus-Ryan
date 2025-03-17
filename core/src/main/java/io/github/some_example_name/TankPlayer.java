@@ -1,11 +1,11 @@
 package io.github.some_example_name;
 
 public class TankPlayer {
-    String colour;
-    int speed;
-    int money;
-    int fuel;
-    int HP;
+    private String colour;
+    private int speed;
+    private int money;
+    private int fuel;
+    private int HP;
 
 
     public TankPlayer(String colour, int speed, int money, int fuel, int HP) {
