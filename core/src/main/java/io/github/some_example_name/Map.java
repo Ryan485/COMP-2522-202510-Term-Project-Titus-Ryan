@@ -1,6 +1,9 @@
 package io.github.some_example_name;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class Map {
+    private SpriteBatch batch;
     String biome;
     int wind;
 
@@ -12,5 +15,7 @@ public class Map {
     public int getWind() {return 0;}
     public void getBiome() {}
     public void setBackgroundImage(String backgroundImage) {}
-    public void render(){}
+    public void render(){
+
+    }
 }
