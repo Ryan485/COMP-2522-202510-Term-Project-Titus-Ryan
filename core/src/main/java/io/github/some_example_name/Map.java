@@ -6,8 +6,6 @@ public class Map {
     private String biome;
     private int wind;
     private SpriteBatch batch;
-    String biome;
-    int wind;
 
     public Map(String biome) {
         this.biome = biome;
