@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 public class Shop {
     //<name,[Price,Qty]>
-    HashMap<String, Integer[]> Inventory;
-    String name;
-    public Shop() {
+    private final HashMap<String, Integer[]> Inventory;
+    private String name;
+    private Shop() {
         Inventory = new HashMap<>();
         //fill in the items and price
     }

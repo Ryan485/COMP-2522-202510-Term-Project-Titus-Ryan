@@ -1,8 +1,8 @@
 package io.github.some_example_name;
 
 public class Volcanobomb extends Weapon {
-    int damageRadius;
-    int radius;
+    private int damageRadius;
+    private int radius;
 
     public Volcanobomb(int damageRadius, int radius, int speed, int damage) {
         super(speed, damage);
@@ -10,13 +10,16 @@ public class Volcanobomb extends Weapon {
         this.radius = radius;
     }
 
-    public void setDamageRadius(int damageRadius) {
+    public void setDamageRadius(final int damageRadius) {
         this.damageRadius = damageRadius;
     }
-    public void setSpeed(int speed) {
+    public void setSpeed(final int speed) {
         this.speed = speed;
     }
-    public void setDamage(int damage) {
+    public void setDamage(final int damage) {
         this.damage = damage;
+    }
+    public void setRadius(final int radius) {
+        this.radius = radius;
     }
 }

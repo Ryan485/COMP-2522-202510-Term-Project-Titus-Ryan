@@ -3,6 +3,8 @@ package io.github.some_example_name;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Map {
+    private String biome;
+    private int wind;
     private SpriteBatch batch;
     String biome;
     int wind;
