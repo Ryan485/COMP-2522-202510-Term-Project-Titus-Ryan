@@ -12,17 +12,21 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
 
+    private BackgroundMap map;
+
+
     @Override
     public void create() {
         batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        map = new BackgroundMap();
+        map.create();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
-        batch.draw(image, 140, 210);
+        map.render();
         batch.end();
     }
 
@@ -31,4 +35,5 @@ public class Main extends ApplicationAdapter {
         batch.dispose();
         image.dispose();
     }
+
 }
