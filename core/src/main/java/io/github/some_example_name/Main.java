@@ -17,22 +17,24 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        final String COLOUR = "green";
-        final int SPEED = 10;
+        final int WIDTH = 50;
+        final int HEIGHT = WIDTH / 2;
+        final int SPEED = 50;
         int money = 0;
         int fuel = 20;
-        int HP = 100;
+        int hp = 100;
 
         batch = new SpriteBatch();
         map = new BackgroundMap();
         map.create();
 
-        tank = new TankPlayer(COLOUR, SPEED, money, fuel, HP);
+        tank = new TankPlayer(WIDTH, HEIGHT, SPEED, money, fuel, hp);
         tank.create();
     }
 
     public void update() {
         tank.input();
+        tank.applyGravity();
     }
 
     @Override

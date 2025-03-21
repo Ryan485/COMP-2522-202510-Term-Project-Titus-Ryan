@@ -7,54 +7,96 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TankPlayer extends Game {
+public class TankPlayer extends Game implements Gravity {
     private SpriteBatch batch;
-    private Texture texture;
-    private int x_coordinate;
-    private int y_coordinate;
-    private String colour;
+    private Texture tankTexture;
+    private Texture canonTexture;
+    private int xCoordinate = 1;
+    private int yCoordinate = 1;
+    private int width;
+    private int height;
     private int speed;
     private int money;
     private int fuel;
-    private int HP;
+    private int hp;
 
-
-    public TankPlayer(String colour, int speed, int money, int fuel, int HP) {
-        this.colour = colour;
+    /**
+     * Constructs the tank.
+     * @param width an int
+     * @param height an int
+     * @param speed an int
+     * @param money an int
+     * @param fuel an int
+     * @param hp an int
+     */
+    public TankPlayer(final int width, final int height, final int speed,
+                      final int money, final int fuel, final int hp) {
+        this.width = width;
+        this.height = height;
         this.speed = speed;
         this.money = money;
         this.fuel = fuel;
-        this.HP = HP;
+        this.hp = hp;
+    }
+    private void moveTankLeft() {
+        //left boarder check
+        if (xCoordinate < 0) {
+            xCoordinate = 0;
+        } else {
+            xCoordinate -= speed;
+        }
+    }
+    private void moveTankRight() {
+        // right boarder check
+        if (xCoordinate > Gdx.graphics.getWidth() - width) {
+            xCoordinate = Gdx.graphics.getWidth() - width;
+        } else {
+            xCoordinate += speed;
+        }
     }
 
+    /**
+     * Check for user input and executes appropriate commands.
+     */
     public void input() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            x_coordinate -= speed;
+            moveTankLeft();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            x_coordinate += speed;
+            moveTankRight();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            y_coordinate += speed;
+            yCoordinate += speed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            y_coordinate -= speed;
+            yCoordinate -= speed;
         }
     }
     @Override
     public void create() {
         batch = new SpriteBatch();
-        texture = new Texture(Gdx.files.internal("assets/tank.png"));
+        tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
+        canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
+
 //        font = new BitmapFont();
     }
 
     public void render() {
         batch.begin();
-        batch.draw(texture,
-            x_coordinate,
-            y_coordinate,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight());
+
+        batch.draw(canonTexture, xCoordinate+20, yCoordinate+18,40, 10);
+        batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
+
         batch.end();
+    }
+
+    @Override
+    public void applyGravity() {
+        final int gravitation = 9;
+        if (yCoordinate > 0) {
+            yCoordinate -= gravitation;
+        } else if (yCoordinate < 0) {
+            yCoordinate = 0;
+        }
     }
 }
