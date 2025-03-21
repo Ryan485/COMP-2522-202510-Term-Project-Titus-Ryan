@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TankPlayer extends Game implements Gravity {
     private SpriteBatch batch;
-    private Sprite sprite;
+//    private Sprite sprite;
     private Texture tankTexture;
     private Texture canonTexture;
     private int xCoordinate = 1;
@@ -123,7 +123,7 @@ public class TankPlayer extends Game implements Gravity {
         batch = new SpriteBatch();
         tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
-        sprite = new Sprite(canonTexture);
+//        sprite = new Sprite(canonTexture);
 //        font = new BitmapFont();
     }
 
