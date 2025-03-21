@@ -59,12 +59,14 @@ public class TankPlayer extends Game implements Gravity {
         }
     }
     private void moveCanonLeft() {
-        if (rotation < 185) {
+        final int lowestLeftRotation = 185;
+        if (rotation < lowestLeftRotation) {
             rotation += rotationSpeed;
         }
     }
     private void moveCanonRight() {
-        if (rotation > -5) {
+        final int lowestRightRotation = -5;
+        if (rotation > lowestRightRotation) {
             rotation -= rotationSpeed;
         }
     }
@@ -80,6 +82,11 @@ public class TankPlayer extends Game implements Gravity {
 
     /**
      * Check for user input and executes appropriate commands.
+     * Tank has:
+     * Move tank left and right: A, D
+     * Move canon up and down: W, S
+     * Fire: SpaceBar
+     * Weapon switch: Q, E
      */
     public void input() {
         // Moving the tank
@@ -108,7 +115,10 @@ public class TankPlayer extends Game implements Gravity {
             fire();
         }
     }
-    @Override
+
+    /**
+     * Create all objects for a tank.
+     */
     public void create() {
         batch = new SpriteBatch();
         tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
@@ -117,6 +127,9 @@ public class TankPlayer extends Game implements Gravity {
 //        font = new BitmapFont();
     }
 
+    /**
+     * Draw the objects to the screen.
+     */
     public void render() {
 //        sprite.setRotation(90);
 //        sprite.setPosition(xCoordinate, yCoordinate);
@@ -135,7 +148,9 @@ public class TankPlayer extends Game implements Gravity {
         batch.end();
     }
 
-    @Override
+    /**
+     * Make sure the tank obeys gravity.
+     */
     public void applyGravity() {
         final int gravitation = 9;
         if (yCoordinate > 0) {
