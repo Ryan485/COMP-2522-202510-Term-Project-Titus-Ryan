@@ -5,10 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TankPlayer extends Game implements Gravity {
     private SpriteBatch batch;
+    private Sprite sprite;
     private Texture tankTexture;
     private Texture canonTexture;
     private int xCoordinate = 1;
@@ -19,6 +21,8 @@ public class TankPlayer extends Game implements Gravity {
     private int money;
     private int fuel;
     private int hp;
+    private int rotation = -1;
+    private final int rotationSpeed = 1;
 
     /**
      * Constructs the tank.
@@ -54,6 +58,16 @@ public class TankPlayer extends Game implements Gravity {
             xCoordinate += speed;
         }
     }
+    private void moveCanonLeft() {
+        if (rotation < 185) {
+            rotation += rotationSpeed;
+        }
+    }
+    private void moveCanonRight() {
+        if (rotation > -5) {
+            rotation -= rotationSpeed;
+        }
+    }
 
     /**
      * Check for user input and executes appropriate commands.
@@ -66,10 +80,10 @@ public class TankPlayer extends Game implements Gravity {
             moveTankRight();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            yCoordinate += speed;
+            moveCanonLeft();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            yCoordinate -= speed;
+            moveCanonRight();
         }
     }
     @Override
@@ -77,14 +91,23 @@ public class TankPlayer extends Game implements Gravity {
         batch = new SpriteBatch();
         tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
-
+        sprite = new Sprite(canonTexture);
 //        font = new BitmapFont();
     }
 
     public void render() {
+//        sprite.setRotation(90);
+//        sprite.setPosition(xCoordinate, yCoordinate);
         batch.begin();
 
-        batch.draw(canonTexture, xCoordinate+20, yCoordinate+18,40, 10);
+        //Canon
+        batch.draw(canonTexture, xCoordinate+25, yCoordinate+18, 0,  5, 40, 10,
+        1, 1, rotation, 0, 0, 500, 101, false, false);
+//        batch.draw(canonTexture, xCoordinate+20, yCoordinate+18,40, 10);
+//        batch.draw(sprite, xCoordinate+20, yCoordinate+18, 40, 10);
+//        sprite.draw(batch);
+
+        //Tank
         batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
 
         batch.end();
