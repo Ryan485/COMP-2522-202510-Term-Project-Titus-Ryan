@@ -13,9 +13,11 @@ public class BackgroundMap extends Game {
     private Texture texture;
     private BitmapFont font;
 
-    public void setWind(int wind) {}
-    public int getWind() {return 0;}
-    public void getBiome() {}
+    public void setWind(int wind) {
+        this.wind = wind;
+    }
+    public int getWind() {return wind;}
+    public String getBiome() {return biome;}
 
     @Override
     public void create() {
