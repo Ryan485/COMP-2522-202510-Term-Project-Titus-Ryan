@@ -68,22 +68,44 @@ public class TankPlayer extends Game implements Gravity {
             rotation -= rotationSpeed;
         }
     }
+    private void switchBombLeft(){
+        //...Code...
+    }
+    private void switchBombRight() {
+        //...Code...
+    }
+    private void fire(){
+        //...Code...
+    }
 
     /**
      * Check for user input and executes appropriate commands.
      */
     public void input() {
+        // Moving the tank
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moveTankLeft();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             moveTankRight();
         }
+        // Moves the canon
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveCanonLeft();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             moveCanonRight();
+        }
+        // Switch Weapon
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            switchBombLeft();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            switchBombRight();
+        }
+        // Fire!
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            fire();
         }
     }
     @Override
