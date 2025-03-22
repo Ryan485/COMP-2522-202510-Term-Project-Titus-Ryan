@@ -7,9 +7,10 @@ import com.badlogic.gdx.Gdx;
 public class NuclearBomb extends Bomb{
     private int damageRadius;
     private int radius;
-    private Texture nuclearBombtexture;
+    private final Texture nuclearBombtexture;
     private float x,y;   // float coordinates for smooth motion
     private float velocity_x, velocity_y;    // velocity components
+    private boolean active;
 
 
 
@@ -24,8 +25,13 @@ public class NuclearBomb extends Bomb{
         this.angle = angle;
         this.velocity_x = (float) Math.cos(Math.toRadians(angle)) * speed;
         this.velocity_y = (float) Math.sin(Math.toRadians(angle)) * speed;
-
+        this.active = true;
     }
+
+    public void update(float delta) {
+        x += velocity_x * delta;
+    }
+
     public void setDamageRadius(final int damageRadius) {
         this.damageRadius = damageRadius;
     }
@@ -41,7 +47,19 @@ public class NuclearBomb extends Bomb{
     public void setDamage(final int damage) {
         this.damage = damage;
     }
+
     public void setRadius(final int radius) {
         this.radius = radius;
+    }
+
+    public int getDamageRadius() {
+        return damageRadius;
+    }
+
+    public void dispose() {
+        nuclearBombtexture.dispose();
+    }
+
+    public void applyGravity() {
     }
 }
