@@ -11,6 +11,7 @@ public class NuclearBomb extends Bomb{
     private float x,y;   // float coordinates for smooth motion
     private float velocity_x, velocity_y;    // velocity components
     private boolean active;
+    private static final float GRAVITY_FORMULA = -9.8f * 10;
 
 
 
@@ -29,7 +30,18 @@ public class NuclearBomb extends Bomb{
     }
 
     public void update(float delta) {
+        if (!active) return;
+
+        // update position with velocity
         x += velocity_x * delta;
+        y += velocity_y * delta;
+
+        velocity_y += GRAVITY_FORMULA * delta;
+
+        if (y <= 0) {
+            active = false;
+            y = 0;
+        }
     }
 
     public void setDamageRadius(final int damageRadius) {
