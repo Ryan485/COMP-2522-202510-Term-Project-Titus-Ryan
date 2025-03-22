@@ -87,6 +87,12 @@ public class NuclearBomb extends Bomb{
         return active;
     }
 
+    public void render(SpriteBatch batch) {
+        if (active) {
+            batch.draw(nuclearBombtexture, x, y, radius * 2, radius * 2);
+        }
+    }
+
     public void applyGravity() {
     }
 }
