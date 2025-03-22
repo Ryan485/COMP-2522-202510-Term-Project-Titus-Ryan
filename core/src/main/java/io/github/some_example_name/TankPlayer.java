@@ -13,6 +13,7 @@ public class TankPlayer extends Game implements Gravity {
 //    private Sprite sprite;
     private Texture tankTexture;
     private Texture canonTexture;
+    private Texture bombTexture;
     private int xCoordinate = 1;
     private int yCoordinate = 1;
     private int width;
@@ -42,6 +43,7 @@ public class TankPlayer extends Game implements Gravity {
         this.fuel = fuel;
         this.hp = hp;
     }
+
     private void moveTankLeft() {
         //left boarder check
         if (xCoordinate < 0) {
@@ -50,6 +52,7 @@ public class TankPlayer extends Game implements Gravity {
             xCoordinate -= speed;
         }
     }
+
     private void moveTankRight() {
         // right boarder check
         if (xCoordinate > Gdx.graphics.getWidth() - width) {
@@ -58,12 +61,14 @@ public class TankPlayer extends Game implements Gravity {
             xCoordinate += speed;
         }
     }
+
     private void moveCanonLeft() {
         final int lowestLeftRotation = 185;
         if (rotation < lowestLeftRotation) {
             rotation += rotationSpeed;
         }
     }
+
     private void moveCanonRight() {
         final int lowestRightRotation = -5;
         if (rotation > lowestRightRotation) {
@@ -123,6 +128,7 @@ public class TankPlayer extends Game implements Gravity {
         batch = new SpriteBatch();
         tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
+        bombTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
 //        sprite = new Sprite(canonTexture);
 //        font = new BitmapFont();
     }
@@ -144,6 +150,9 @@ public class TankPlayer extends Game implements Gravity {
 
         //Tank
         batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
+
+        //Bomb
+        batch.draw(bombTexture, xCoordinate, yCoordinate, width, height);
 
         batch.end();
     }
