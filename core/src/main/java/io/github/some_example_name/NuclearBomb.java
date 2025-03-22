@@ -4,6 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
+/**
+ * A class that constitutes a nuclear bomb.
+ *
+ * @author Ryan Song
+ * @version 2025
+ */
 public class NuclearBomb extends Bomb{
     private int damageRadius;
     private int radius;
@@ -29,6 +35,11 @@ public class NuclearBomb extends Bomb{
         this.active = true;
     }
 
+    /**
+     * Update the bomb's position.
+     *
+     * @param delta
+     */
     public void update(float delta) {
         if (!active) return;
 
