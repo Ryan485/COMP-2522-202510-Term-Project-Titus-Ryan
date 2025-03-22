@@ -1,8 +1,13 @@
 package io.github.some_example_name;
 
-public class NuclearBomb extends Weapon{
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Gdx;
+
+public class NuclearBomb extends Bomb{
     private int damageRadius;
     private int radius;
+    private Texture nuclearBombtexture;
     public NuclearBomb(final int damageRadius, final int radius, final int speed, final int damage) {
         super(speed, damage);
         this.damageRadius = damageRadius;
