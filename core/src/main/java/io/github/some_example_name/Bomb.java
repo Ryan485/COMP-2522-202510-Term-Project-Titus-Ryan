@@ -8,7 +8,7 @@ package io.github.some_example_name;
  * @author Ryan
  * @version 2015
  */
-public abstract class Bomb {
+public abstract class Bomb implements Gravity{
     /**
      * Stores how fast the bomb should go.
      */
@@ -18,7 +18,11 @@ public abstract class Bomb {
      */
     protected int damage;
 
-    //need int angle.
+    protected int angle;
+
+    protected int xcoordinate;
+
+    protected int yCoordinate;
 
     /**
      * Constructs an object of type Bomb.
@@ -44,4 +48,16 @@ public abstract class Bomb {
     public abstract void setSpeed(int speed);
 
     //Need getDamage();
+
+    /**
+     * Make sure the bomb obeys gravity.
+     */
+    public void applyGravity() {
+        final int gravitation = 9;
+        if (yCoordinate > 0) {
+            yCoordinate -= gravitation;
+        } else if (yCoordinate < 0) {
+            yCoordinate = 0;
+        }
+    }
 }
