@@ -83,6 +83,10 @@ public class NuclearBomb extends Bomb{
         nuclearBombtexture.dispose();
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     public void applyGravity() {
     }
 }
