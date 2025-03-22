@@ -20,8 +20,6 @@ public abstract class Bomb implements Gravity{
 
     protected int angle;
 
-    protected int xcoordinate;
-
     protected int yCoordinate;
 
     /**

@@ -1,6 +1,6 @@
 package io.github.some_example_name;
 
-public class Volcanobomb extends Weapon {
+public class Volcanobomb extends Bomb {
     private int damageRadius;
     private int radius;
 

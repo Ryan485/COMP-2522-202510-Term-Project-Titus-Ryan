@@ -1,10 +1,10 @@
 package io.github.some_example_name;
 
-public class Bouncingbomb extends Weapon {
+public class Bouncingbomb extends Bomb {
     private int damageRadius;
     private int radius;
 
-    public Bouncingbomb(int damageRadius, int radius, int speed, int damage) {
+    public Bouncingbomb(int damageRadius, int radius, int speed, int damage){
         super(speed, damage);
         this.damageRadius = damageRadius;
         this.radius = radius;
