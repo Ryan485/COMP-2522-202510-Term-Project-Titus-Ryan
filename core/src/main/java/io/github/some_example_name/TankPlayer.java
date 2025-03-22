@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class TankPlayer extends Game implements Gravity {
     private SpriteBatch batch;
 //    private Sprite sprite;
@@ -24,6 +27,8 @@ public class TankPlayer extends Game implements Gravity {
     private int hp;
     private int rotation = -1;
     private final int rotationSpeed = 1;
+    private ArrayList<NuclearBomb> bombs;
+    private boolean useNuclearBomb = true;
 
     /**
      * Constructs the tank.
@@ -42,6 +47,7 @@ public class TankPlayer extends Game implements Gravity {
         this.money = money;
         this.fuel = fuel;
         this.hp = hp;
+        this.bombs = new ArrayList<>();
     }
 
     private void moveTankLeft() {
@@ -81,8 +87,17 @@ public class TankPlayer extends Game implements Gravity {
     private void switchBombRight() {
         //...Code...
     }
-    private void fire(){
-        //...Code...
+    private void fire() {
+        float cannonLength = 40f;
+        float cannonPivotX = 0f;
+        float cannonPivotY = 5f;
+        float cannonX = xCoordinate + 25 + cannonPivotX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
+        float cannonY = yCoordinate + 18 + cannonPivotY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+
+        if (useNuclearBomb) {
+            NuclearBomb bomb = new NuclearBomb(50, 20, 300, 100, cannonX, cannonY, rotation);
+            bombs.add(bomb);
+        }
     }
 
     /**
@@ -116,7 +131,7 @@ public class TankPlayer extends Game implements Gravity {
             switchBombRight();
         }
         // Fire!
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             fire();
         }
     }
@@ -137,6 +152,17 @@ public class TankPlayer extends Game implements Gravity {
      * Draw the objects to the screen.
      */
     public void render() {
+        float delta = Gdx.graphics.getDeltaTime();
+
+        Iterator<NuclearBomb> iterator = bombs.iterator();
+        while (iterator.hasNext()) {
+            NuclearBomb bomb = iterator.next();
+            bomb.update(delta);
+            if (!bomb.isActive()) {
+                iterator.remove();
+            }
+        }
+
 //        sprite.setRotation(90);
 //        sprite.setPosition(xCoordinate, yCoordinate);
         batch.begin();
@@ -152,7 +178,12 @@ public class TankPlayer extends Game implements Gravity {
         batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
 
         //Bomb
-        batch.draw(bombTexture, xCoordinate, yCoordinate, width, height);
+        batch.draw(canonTexture, xCoordinate + 25, yCoordinate + 18, 0, 5,
+            40, 10, 1, 1, rotation, 0, 0, 500,
+            101, false, false);
+        for (NuclearBomb bomb : bombs) {
+            bomb.render(batch);
+        }
 
         batch.end();
     }
@@ -168,4 +199,13 @@ public class TankPlayer extends Game implements Gravity {
             yCoordinate = 0;
         }
     }
+
+    public boolean isUseNuclearBomb() {
+        return useNuclearBomb;
+    }
+
+    public void setUseNuclearBomb(boolean useNuclearBomb) {
+        this.useNuclearBomb = useNuclearBomb;
+    }
+
 }
