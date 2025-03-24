@@ -52,6 +52,7 @@ public class BackgroundMap extends Game {
     public void create() {
         batch = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("assets/mountainBright.png"));
+        // Create the display of: Power/HP, bomb type, name turn, wind, and biome
         font = new BitmapFont();
     }
 
@@ -60,7 +61,9 @@ public class BackgroundMap extends Game {
      */
     public void render() {
         batch.begin();
-        batch.draw(texture,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        final int originPtr = 0;
+        batch.draw(texture, originPtr, originPtr,
+            Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
     }
 }
