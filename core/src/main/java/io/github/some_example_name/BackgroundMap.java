@@ -6,6 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Background is a class tasked with displaying a background image
+ * and setting the environment interactions.
+ *
+ * @author Titus
+ * @author Ryan
+ * @version 2015
+ */
 public class BackgroundMap extends Game {
     private String biome;
     private int wind;
@@ -13,12 +21,33 @@ public class BackgroundMap extends Game {
     private Texture texture;
     private BitmapFont font;
 
-    public void setWind(int wind) {
+    /**
+     * Set the wind of the environment.
+     * @param wind an int
+     */
+    public void setWind(final int wind) {
         this.wind = wind;
     }
-    public int getWind() {return wind;}
-    public String getBiome() {return biome;}
 
+    /**
+     * gets the wind.
+     * @return wind an int
+     */
+    public int getWind() {
+        return wind;
+    }
+
+    /**
+     * get the biome.
+     * @return biome a string
+     */
+    public String getBiome() {
+        return biome;
+    }
+
+    /**
+     * create the texture for the background.
+     */
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -26,7 +55,10 @@ public class BackgroundMap extends Game {
         font = new BitmapFont();
     }
 
-    public void render(){
+    /**
+     * draw the texture onto the screen.
+     */
+    public void render() {
         batch.begin();
         batch.draw(texture,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         batch.end();
