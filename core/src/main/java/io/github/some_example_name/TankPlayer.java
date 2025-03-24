@@ -96,6 +96,7 @@ public class TankPlayer extends Game implements Gravity {
 
         if (useNuclearBomb) {
             NuclearBomb bomb = new NuclearBomb(50, 20, 300, 100, cannonX, cannonY, rotation);
+            bomb.applyGravity();
             bombs.add(bomb);
         }
     }
@@ -178,9 +179,7 @@ public class TankPlayer extends Game implements Gravity {
         batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
 
         //Bomb
-        batch.draw(canonTexture, xCoordinate + 25, yCoordinate + 18, 0, 5,
-            40, 10, 1, 1, rotation, 0, 0, 500,
-            101, false, false);
+        batch.draw(canonTexture, xCoordinate + 25, yCoordinate + 18, 40, 10);
         for (NuclearBomb bomb : bombs) {
             bomb.render(batch);
         }
