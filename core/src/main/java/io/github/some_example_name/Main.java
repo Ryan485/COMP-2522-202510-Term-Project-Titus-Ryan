@@ -14,6 +14,7 @@ public class Main extends ApplicationAdapter {
 
     private BackgroundMap map;
     private TankPlayer tank;
+    private Grain grain;
 
     @Override
     public void create() {
@@ -23,11 +24,15 @@ public class Main extends ApplicationAdapter {
         int money = 0;
         int fuel = 20;
         int hp = 100;
+        // Grain
+        final String type = "forest";
+        final int grainSize = 1;
 
         batch = new SpriteBatch();
         map = new BackgroundMap();
         map.create();
-
+        grain = new Grain(type, grainSize);
+        grain.create();
         tank = new TankPlayer(WIDTH, HEIGHT, SPEED, money, fuel, hp);
         tank.create();
     }
@@ -43,6 +48,7 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
         map.render();
+        grain.render();
         tank.render();
         batch.end();
     }

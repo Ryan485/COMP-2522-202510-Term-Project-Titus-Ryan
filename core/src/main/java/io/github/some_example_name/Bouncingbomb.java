@@ -4,7 +4,7 @@ public class Bouncingbomb extends Bomb {
     private int damageRadius;
     private int radius;
 
-    public Bouncingbomb(int damageRadius, int radius, int speed, int damage){
+    public Bouncingbomb(final int damageRadius, final int radius, final int speed, final int damage) {
         super(speed, damage);
         this.damageRadius = damageRadius;
         this.radius = radius;

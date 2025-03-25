@@ -4,8 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
@@ -169,11 +167,8 @@ public class TankPlayer extends Game implements Gravity {
         batch.begin();
 
         //Canon
-        batch.draw(canonTexture, xCoordinate+25, yCoordinate+18, 0,  5, 40, 10,
+        batch.draw(canonTexture, xCoordinate + 25, yCoordinate+18, 0,  5, 40, 10,
         1, 1, rotation, 0, 0, 500, 101, false, false);
-//        batch.draw(canonTexture, xCoordinate+20, yCoordinate+18,40, 10);
-//        batch.draw(sprite, xCoordinate+20, yCoordinate+18, 40, 10);
-//        sprite.draw(batch);
 
         //Tank
         batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
@@ -181,6 +176,7 @@ public class TankPlayer extends Game implements Gravity {
         //Bomb
         batch.draw(canonTexture, xCoordinate + 25, yCoordinate + 18, 40, 10);
         for (NuclearBomb bomb : bombs) {
+            bomb.applyGravity();
             bomb.render(batch);
         }
 

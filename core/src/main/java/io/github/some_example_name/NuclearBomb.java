@@ -92,7 +92,4 @@ public class NuclearBomb extends Bomb{
             batch.draw(nuclearBombtexture, x, y, radius * 2, radius * 2);
         }
     }
-
-    public void applyGravity() {
-    }
 }
