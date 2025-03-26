@@ -21,6 +21,8 @@ public class Grain extends Game {
     private int numberOfGrains;
     private float[] terrainX;
     private float[] terrainY;
+    private int amplitude = 50;
+    private int frequency = 50;
 
     /**
      * Construct the ground where the tanks will be on.
@@ -44,20 +46,17 @@ public class Grain extends Game {
         if (type.equals("forest")) {
             grainTexture = new Texture(Gdx.files.internal("assets/green.png"));
         }
-        Random random = new Random();
-        numberOfGrains = Gdx.graphics.getWidth() / size;
+        numberOfGrains = Gdx.graphics.getWidth() / size; // Find the number of rectangles needed
         terrainX = new float[numberOfGrains];
         terrainY = new float[numberOfGrains];
+        Random random = new Random();
         int tempXCoordinate = 0;
-        final int minMidLine = 100;
+        final int minMidLine = 200;
         final int maxMidLine = 30;
-        int xAxis = random.nextInt(maxMidLine) + minMidLine;
-        int amplitude;
-        final int amplitudeMaxRange = 10;
-        int frequency;
-        final int frequencyMinRange = 30;
-        final int frequencyMaxRange = 10;
         final int numberOfInflection = 5;
+        int xAxis = random.nextInt(maxMidLine) + minMidLine;
+//        private int amplitude = 1;
+//        private int frequency = 1;
         int[] inflectionPts = new int[numberOfInflection];
 
         // Random inflection points
@@ -66,11 +65,28 @@ public class Grain extends Game {
         }
         // Creat the sin wave
         for (int i = 0; i < numberOfGrains; i++) {
-            amplitude = random.nextInt(amplitudeMaxRange) + xAxis;
-            frequency = random.nextInt(frequencyMaxRange) + frequencyMinRange;
-            System.out.println(frequency);
             terrainX[i] = tempXCoordinate;
-            terrainY[i] = (float) (30 * Math.sin(terrainX[i] / 30) + xAxis);
+            System.out.println(frequency);
+
+            terrainY[i] = (float) (amplitude * Math.sin(terrainX[i] / frequency) + xAxis);
+//            for (int n = 0; n < numberOfInflection; n++) {
+//                if (inflectionPts[n] == i) {
+//                    amplitude = random.nextInt(50)+10;
+//                    frequency = random.nextInt(90)+10;
+//                }
+//            }
+            int maxima = amplitude + xAxis;
+            int minima = xAxis - amplitude;
+//            if (Math.sin(terrainX[i]) == 1 || Math.sin(terrainX[i]) == -1) {}
+//            if (terrainY[i] == maxima || terrainY[i] == minima && 3 == random.nextInt(10)) {
+//            if (1 == random.nextInt(100)) {
+            if (maxima-1 <= terrainY[i]|| minima+1 >= terrainY[i]){
+                Random rand = new Random();
+                amplitude = rand.nextInt(50)+10;
+                frequency = rand.nextInt(90)+10;
+                System.out.println(frequency);
+                System.out.println(amplitude);
+            }
             tempXCoordinate += size;
         }
     }
