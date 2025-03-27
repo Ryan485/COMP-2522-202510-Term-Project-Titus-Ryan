@@ -16,13 +16,10 @@ public class Grain extends Game {
     private SpriteBatch batch;
     private Texture grainTexture;
     private final String type;
-    private int size;
-    private int xCoordinate = 1;
+    private final int size;
     private int numberOfGrains;
     private float[] terrainX;
     private float[] terrainY;
-    private int amplitude = 50;
-    private int frequency = 50;
 
     /**
      * Construct the ground where the tanks will be on.
@@ -38,8 +35,6 @@ public class Grain extends Game {
      */
     public void create() {
         batch = new SpriteBatch();
-//        grainTexture = new Texture(Gdx.files.internal("assets/green.png"));
-
         if (type.equals("mountain")) {
             grainTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
         }
@@ -53,48 +48,24 @@ public class Grain extends Game {
         int tempXCoordinate = 0;
         final int minMidLine = 200;
         final int maxMidLine = 30;
+        final int inflectionPoint = random.nextInt(5) + 10;
         int xAxis = random.nextInt(maxMidLine) + minMidLine;
-        float copyterrainY[] = SmoothRandomArray.generateSmoothTerrain(numberOfGrains, xAxis, 10);
+        float[] copyTerrainY = SmoothRandomArray.generateSmoothTerrain(numberOfGrains,
+            xAxis, inflectionPoint);
         for (int i = 0; i < numberOfGrains; i++) {
-            terrainY[i] = copyterrainY[i];
+            terrainY[i] = copyTerrainY[i];
             tempXCoordinate += size;
             terrainX[i] = tempXCoordinate;
         }
-        //        for (int i = 0; i < numberOfGrains; i++) {
-//            System.out.println(terrainY[i]);
-//            terrainX[i] = xCoordinate;
-//            tempXCoordinate += size;
-//        }
-        // Creat the sin wave
-//        for (int i = 0; i < numberOfGrains; i++) {
-//            terrainX[i] = tempXCoordinate;
-//
-//            terrainY[i] = (float) (30 * Math.sin(terrainX[i] / frequency)) + xAxis;
-//            int maxima = amplitude + xAxis;
-//            int minima = xAxis - amplitude;
-////            if (Math.sin(terrainX[i]) == 1 || Math.sin(terrainX[i]) == -1) {}
-////            if (terrainY[i] == maxima || terrainY[i] == minima && 3 == random.nextInt(10)) {
-////            if (1 == random.nextInt(100)) {
-//            if (maxima-1 <= terrainY[i] || minima+1 >= terrainY[i]){
-//                Random rand = new Random();
-//                amplitude = rand.nextInt(50)+10;
-//                frequency = rand.nextInt(90)+10;
-//                System.out.println("frequency = " + frequency);
-//                System.out.println("amplitude = " + amplitude);
-//            }
-//            tempXCoordinate += size;
-//        }
     }
     /**
      * Draw the object to the screen.
      */
     public void render() {
-
-
         batch.begin();
         //create x amount of pillars
         for (int i = 0; i < numberOfGrains; i++) {
-            batch.draw(grainTexture, terrainX[i], 0, (float)size, terrainY[i]);
+            batch.draw(grainTexture, terrainX[i], 0, (float) size, terrainY[i]);
         }
         batch.end();
     }
