@@ -53,42 +53,37 @@ public class Grain extends Game {
         int tempXCoordinate = 0;
         final int minMidLine = 200;
         final int maxMidLine = 30;
-        final int numberOfInflection = 5;
         int xAxis = random.nextInt(maxMidLine) + minMidLine;
-//        private int amplitude = 1;
-//        private int frequency = 1;
-        int[] inflectionPts = new int[numberOfInflection];
-
-        // Random inflection points
-        for (int i = 0; i < numberOfInflection; i++) {
-            inflectionPts[i] = random.nextInt(Gdx.graphics.getWidth());
-        }
-        // Creat the sin wave
+        float copyterrainY[] = SmoothRandomArray.generateSmoothTerrain(numberOfGrains, xAxis, 10);
         for (int i = 0; i < numberOfGrains; i++) {
-            terrainX[i] = tempXCoordinate;
-            System.out.println(frequency);
-
-            terrainY[i] = (float) (amplitude * Math.sin(terrainX[i] / frequency) + xAxis);
-//            for (int n = 0; n < numberOfInflection; n++) {
-//                if (inflectionPts[n] == i) {
-//                    amplitude = random.nextInt(50)+10;
-//                    frequency = random.nextInt(90)+10;
-//                }
-//            }
-            int maxima = amplitude + xAxis;
-            int minima = xAxis - amplitude;
-//            if (Math.sin(terrainX[i]) == 1 || Math.sin(terrainX[i]) == -1) {}
-//            if (terrainY[i] == maxima || terrainY[i] == minima && 3 == random.nextInt(10)) {
-//            if (1 == random.nextInt(100)) {
-            if (maxima-1 <= terrainY[i]|| minima+1 >= terrainY[i]){
-                Random rand = new Random();
-                amplitude = rand.nextInt(50)+10;
-                frequency = rand.nextInt(90)+10;
-                System.out.println(frequency);
-                System.out.println(amplitude);
-            }
+            terrainY[i] = copyterrainY[i];
             tempXCoordinate += size;
+            terrainX[i] = tempXCoordinate;
         }
+        //        for (int i = 0; i < numberOfGrains; i++) {
+//            System.out.println(terrainY[i]);
+//            terrainX[i] = xCoordinate;
+//            tempXCoordinate += size;
+//        }
+        // Creat the sin wave
+//        for (int i = 0; i < numberOfGrains; i++) {
+//            terrainX[i] = tempXCoordinate;
+//
+//            terrainY[i] = (float) (30 * Math.sin(terrainX[i] / frequency)) + xAxis;
+//            int maxima = amplitude + xAxis;
+//            int minima = xAxis - amplitude;
+////            if (Math.sin(terrainX[i]) == 1 || Math.sin(terrainX[i]) == -1) {}
+////            if (terrainY[i] == maxima || terrainY[i] == minima && 3 == random.nextInt(10)) {
+////            if (1 == random.nextInt(100)) {
+//            if (maxima-1 <= terrainY[i] || minima+1 >= terrainY[i]){
+//                Random rand = new Random();
+//                amplitude = rand.nextInt(50)+10;
+//                frequency = rand.nextInt(90)+10;
+//                System.out.println("frequency = " + frequency);
+//                System.out.println("amplitude = " + amplitude);
+//            }
+//            tempXCoordinate += size;
+//        }
     }
     /**
      * Draw the object to the screen.
