@@ -14,20 +14,20 @@ Before you begin, ensure you have the following installed:
 
 ## Tasks 
 
-[ ] Make sure the tank rotates properly when going up or down hill
+-[ ] Make sure the tank rotates properly when going up or down hill
 
-[ ] Collision for bomb to terrain
+-[ ] Collision for bomb to terrain
 
-[ ] Add wind in to the map
+-[ ] Add wind in to the map
 
-[ ] Bomb still needs gravity
+-[ ] Bomb still needs gravity
 
-[ ] Implement the different types of bombs
+-[ ] Implement the different types of bombs
 
-[ ] Keep score even after the game ends
+-[ ] Keep score even after the game ends
 
-[ ] Implement the interface to show bomb types, hp, power, and wind
+-[ ] Implement the interface to show bomb types, hp, power, and wind
 
-[ ] Make second tank player
+-[ ] Make second tank player
 
-[ ] Turn it to a turn base shooter
+-[ ] Turn it to a turn base shooter
