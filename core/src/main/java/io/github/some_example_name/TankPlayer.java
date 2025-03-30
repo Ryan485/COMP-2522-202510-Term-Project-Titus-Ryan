@@ -15,8 +15,8 @@ public class TankPlayer extends Game implements Gravity {
     private Texture tankTexture;
     private Texture canonTexture;
     private Texture bombTexture;
-    private int xCoordinate = 1;
-    private int yCoordinate = 1;
+    private float xCoordinate = 1;
+    private float yCoordinate = 1;
     private int width;
     private int height;
     private int speed;
@@ -27,6 +27,7 @@ public class TankPlayer extends Game implements Gravity {
     private final int rotationSpeed = 1;
     private ArrayList<NuclearBomb> bombs;
     private boolean useNuclearBomb = true;
+    private final Grain grain;
 
     /**
      * Constructs the tank.
@@ -38,7 +39,7 @@ public class TankPlayer extends Game implements Gravity {
      * @param hp an int
      */
     public TankPlayer(final int width, final int height, final int speed,
-                      final int money, final int fuel, final int hp) {
+                      final int money, final int fuel, final int hp, final Grain grain) {
         this.width = width;
         this.height = height;
         this.speed = speed;
@@ -46,6 +47,7 @@ public class TankPlayer extends Game implements Gravity {
         this.fuel = fuel;
         this.hp = hp;
         this.bombs = new ArrayList<>();
+        this.grain = grain;
     }
 
     private void moveTankLeft() {
@@ -188,10 +190,11 @@ public class TankPlayer extends Game implements Gravity {
      */
     public void applyGravity() {
         final int gravitation = 9;
-        if (yCoordinate > 0) {
+        float[] grainHeights = grain.getTerrainY();
+        if (yCoordinate > grainHeights[(int) xCoordinate]) {
             yCoordinate -= gravitation;
-        } else if (yCoordinate < 0) {
-            yCoordinate = 0;
+        } else if (yCoordinate < grainHeights[(int) xCoordinate]) {
+            yCoordinate = grainHeights[(int) xCoordinate];
         }
     }
 
