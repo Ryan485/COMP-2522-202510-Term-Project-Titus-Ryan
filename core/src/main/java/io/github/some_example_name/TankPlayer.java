@@ -186,15 +186,22 @@ public class TankPlayer extends Game implements Gravity {
     }
 
     /**
-     * Make sure the tank obeys gravity.
+     * Make sure the tank sticks to the ground.
      */
     public void applyGravity() {
         final int gravitation = 9;
+        final int offset = 20;
         float[] grainHeights = grain.getTerrainY();
-        if (yCoordinate > grainHeights[(int) xCoordinate]) {
-            yCoordinate -= gravitation;
-        } else if (yCoordinate < grainHeights[(int) xCoordinate]) {
-            yCoordinate = grainHeights[(int) xCoordinate];
+//        if (yCoordinate > grainHeights[(int) xCoordinate + offset]) {
+//            //creates a choppy-ness to the tank when going down
+//            yCoordinate -= gravitation;
+//        } else if (yCoordinate < grainHeights[(int) xCoordinate + offset]) {
+//            yCoordinate = grainHeights[(int) xCoordinate + offset];
+//        }
+        //Not gravity anymore
+        //if the terrain under it is destroyed, it will teleport down
+        if (yCoordinate != grainHeights[(int) xCoordinate + offset]) {
+            yCoordinate = grainHeights[(int) xCoordinate + offset];
         }
     }
 
