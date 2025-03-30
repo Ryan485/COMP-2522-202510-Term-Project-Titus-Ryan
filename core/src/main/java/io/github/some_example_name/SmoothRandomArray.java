@@ -18,7 +18,7 @@ public class SmoothRandomArray {
             int index = (int) xLocation;
             float frac = xLocation - index; // Get fractional part (ask James)
 
-            // Ensure index is within bounds
+            // finds the min inflection point
             int nextIndex = Math.min(index + 1, inflectionPoint - 1);
 
             // heart of the smooth transition (also ask James)

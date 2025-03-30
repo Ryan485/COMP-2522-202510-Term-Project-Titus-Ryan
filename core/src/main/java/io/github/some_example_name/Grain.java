@@ -35,6 +35,7 @@ public class Grain extends Game {
      */
     public void create() {
         batch = new SpriteBatch();
+        // To determine the color of the terrain
         if (type.equals("mountain")) {
             grainTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
         }
@@ -46,14 +47,15 @@ public class Grain extends Game {
         terrainY = new float[numberOfGrains];
         Random random = new Random();
         int tempXCoordinate = 0;
-        final int minMidLine = 200;
-        final int maxMidLine = 30;
+        final int minMidLine = 500;
+        final int maxMidLine = 100;
+        final int minFloorHeight = 100;
         final int inflectionPoint = random.nextInt(5) + 10;
         int xAxis = random.nextInt(maxMidLine) + minMidLine;
         float[] copyTerrainY = SmoothRandomArray.generateSmoothTerrain(numberOfGrains,
             xAxis, inflectionPoint);
         for (int i = 0; i < numberOfGrains; i++) {
-            terrainY[i] = copyTerrainY[i];
+            terrainY[i] = copyTerrainY[i] + minFloorHeight;
             tempXCoordinate += size;
             terrainX[i] = tempXCoordinate;
         }
@@ -68,5 +70,21 @@ public class Grain extends Game {
             batch.draw(grainTexture, terrainX[i], 0, (float) size, terrainY[i]);
         }
         batch.end();
+    }
+
+    /**
+     * A list of all x coordinates.
+     * @return float array
+     */
+    public float[] getTerrainX() {
+        return terrainX;
+    }
+
+    /**
+     * a list of all y coordinates relative to x.
+     * @return float array
+     */
+    public float[] getTerrainY() {
+        return terrainY;
     }
 }
