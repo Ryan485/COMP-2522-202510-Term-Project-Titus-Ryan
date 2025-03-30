@@ -52,18 +52,14 @@ public class TankPlayer extends Game implements Gravity {
 
     private void moveTankLeft() {
         //left boarder check
-        if (xCoordinate < 0) {
-            xCoordinate = 0;
-        } else {
+        if (xCoordinate > 1) {
             xCoordinate -= speed;
         }
     }
 
     private void moveTankRight() {
         // right boarder check
-        if (xCoordinate > Gdx.graphics.getWidth() - width) {
-            xCoordinate = Gdx.graphics.getWidth() - width;
-        } else {
+        if (xCoordinate < Gdx.graphics.getWidth() - width) {
             xCoordinate += speed;
         }
     }
@@ -176,7 +172,6 @@ public class TankPlayer extends Game implements Gravity {
         batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
 
         //Bomb
-        batch.draw(canonTexture, xCoordinate + 25, yCoordinate + 18, 40, 10);
         for (NuclearBomb bomb : bombs) {
             bomb.applyGravity();
             bomb.render(batch);
