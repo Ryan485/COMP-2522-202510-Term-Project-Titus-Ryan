@@ -38,9 +38,9 @@ public class NuclearBomb extends Bomb{
     /**
      * Update the bomb's position.
      *
-     * @param delta
+     * @param delta a float
      */
-    public void update(float delta) {
+    public void update(final float delta) {
         if (!active) return;
 
         // update position with velocity

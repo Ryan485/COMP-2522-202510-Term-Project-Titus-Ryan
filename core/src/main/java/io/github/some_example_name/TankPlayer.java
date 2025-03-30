@@ -91,7 +91,12 @@ public class TankPlayer extends Game implements Gravity {
         float cannonY = yCoordinate + 18 + cannonPivotY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
 
         if (useNuclearBomb) {
-            NuclearBomb bomb = new NuclearBomb(50, 20, 300, 100, cannonX, cannonY, rotation);
+            //bomb adjustments
+            final int damageRadius = 50;
+            final int bombSize = 5;
+            final int bombSpeed = 300;
+            final int bombDamage = 100;
+            NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonX, cannonY, rotation);
             bomb.applyGravity();
             bombs.add(bomb);
         }

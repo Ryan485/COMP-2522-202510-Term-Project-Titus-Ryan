@@ -20,7 +20,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         final int WIDTH = 50;
         final int HEIGHT = WIDTH / 2;
-        final int SPEED = 5;
+        final int SPEED = 1;
         int money = 0;
         int fuel = 20;
         int hp = 100;
