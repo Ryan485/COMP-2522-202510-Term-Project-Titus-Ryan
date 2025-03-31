@@ -25,9 +25,13 @@ public class TankPlayer extends Game implements Gravity {
     private int hp;
     private int rotation = -1;
     private final int rotationSpeed = 1;
-    private ArrayList<NuclearBomb> bombs;
+    private final ArrayList<NuclearBomb> bombs;
     private boolean useNuclearBomb = true;
-    private final Grain grain;
+    private final int offset = 20;
+    private final float[] grainHeights;
+    private final int acceptableIncline = 55;
+    private final int futureSight = 10 + offset;
+    private float inclineAngle = 0;
 
     /**
      * Constructs the tank.
@@ -47,20 +51,41 @@ public class TankPlayer extends Game implements Gravity {
         this.fuel = fuel;
         this.hp = hp;
         this.bombs = new ArrayList<>();
-        this.grain = grain;
+        grainHeights = grain.getTerrainY();
     }
 
     private void moveTankLeft() {
-        //left boarder check
-        if (xCoordinate > 1) {
-            xCoordinate -= speed;
+        float futureY = grainHeights[(int) xCoordinate + offset - futureSight];
+        float futureX = xCoordinate - futureSight;
+        float deltaY = futureY - yCoordinate;
+        float deltaX = futureX - xCoordinate;
+        inclineAngle = (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
+        if (inclineAngle > 90 || inclineAngle < -90) {
+            inclineAngle += 180;  // Flip the tank
+        }
+        float deviation = futureY - yCoordinate;
+        if (deviation < acceptableIncline) {
+            //left boarder check
+            if (xCoordinate > 1) {
+                xCoordinate -= speed;
+            }
         }
     }
 
     private void moveTankRight() {
-        // right boarder check
-        if (xCoordinate < Gdx.graphics.getWidth() - width) {
-            xCoordinate += speed;
+        float futureY = grainHeights[(int) xCoordinate + offset + futureSight];
+        float futureX = xCoordinate + futureSight;
+        float deltaY = futureY - yCoordinate;
+        float deltaX = futureX - xCoordinate;
+        inclineAngle = (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
+        if (inclineAngle > 90 || inclineAngle < -90) {
+            inclineAngle += 180;  // Flip the tank
+        }
+        if (futureY - yCoordinate < acceptableIncline) {
+            // right boarder check
+            if (xCoordinate < Gdx.graphics.getWidth() - width) {
+                xCoordinate += speed;
+            }
         }
     }
 
@@ -84,18 +109,18 @@ public class TankPlayer extends Game implements Gravity {
         //...Code...
     }
     private void fire() {
-        float cannonLength = 40f;
-        float cannonPivotX = 0f;
-        float cannonPivotY = 5f;
-        float cannonX = xCoordinate + 25 + cannonPivotX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
-        float cannonY = yCoordinate + 18 + cannonPivotY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+        final float cannonLength = 40f;
+        final float cannonPivotX = 0f;
+        final float cannonPivotY = 5f;
+        final float cannonX = xCoordinate + 25 + cannonPivotX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
+        final float cannonY = yCoordinate + 18 + cannonPivotY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+        //bomb adjustments
+        final int damageRadius = 50;
+        final int bombSize = 5;
+        final int bombSpeed = 300;
+        final int bombDamage = 100;
 
         if (useNuclearBomb) {
-            //bomb adjustments
-            final int damageRadius = 50;
-            final int bombSize = 5;
-            final int bombSpeed = 300;
-            final int bombDamage = 100;
             NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonX, cannonY, rotation);
             bomb.applyGravity();
             bombs.add(bomb);
@@ -146,8 +171,6 @@ public class TankPlayer extends Game implements Gravity {
         tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
         bombTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
-//        sprite = new Sprite(canonTexture);
-//        font = new BitmapFont();
     }
 
     /**
@@ -165,8 +188,6 @@ public class TankPlayer extends Game implements Gravity {
             }
         }
 
-//        sprite.setRotation(90);
-//        sprite.setPosition(xCoordinate, yCoordinate);
         batch.begin();
 
         //Canon
@@ -174,14 +195,21 @@ public class TankPlayer extends Game implements Gravity {
         1, 1, rotation, 0, 0, 500, 101, false, false);
 
         //Tank
-        batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
-
+//        batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
+        batch.draw(tankTexture,
+            xCoordinate, yCoordinate,
+            offset, 0,
+            width, height,
+            1, 1,
+            inclineAngle,
+            0, 0,
+            tankTexture.getWidth(), tankTexture.getHeight(),
+            false, false);
         //Bomb
         for (NuclearBomb bomb : bombs) {
             bomb.applyGravity();
             bomb.render(batch);
         }
-
         batch.end();
     }
 
@@ -190,8 +218,6 @@ public class TankPlayer extends Game implements Gravity {
      */
     public void applyGravity() {
         final int gravitation = 9;
-        final int offset = 20;
-        float[] grainHeights = grain.getTerrainY();
 //        if (yCoordinate > grainHeights[(int) xCoordinate + offset]) {
 //            //creates a choppy-ness to the tank when going down
 //            yCoordinate -= gravitation;
