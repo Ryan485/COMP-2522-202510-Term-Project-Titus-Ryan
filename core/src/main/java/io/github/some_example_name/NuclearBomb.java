@@ -3,6 +3,8 @@ package io.github.some_example_name;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 
 /**
  * A class that constitutes a nuclear bomb.
@@ -14,6 +16,7 @@ public class NuclearBomb extends Bomb{
     private int damageRadius;
     private int radius;
     private final Texture nuclearBombtexture;
+    private final TextureRegion nuclearBombRegion;
     private float x,y;   // float coordinates for smooth motion
     private float velocity_x, velocity_y;    // velocity components
     private boolean active;
@@ -26,7 +29,8 @@ public class NuclearBomb extends Bomb{
         super(speed, damage);
         this.damageRadius = damageRadius;
         this.radius = radius;
-        this.nuclearBombtexture = new Texture(Gdx.files.internal("assets/bomb.png"));
+        this.nuclearBombtexture = new Texture(Gdx.files.internal("assets/nuclear_bomb.png"));
+        this.nuclearBombRegion = new TextureRegion(nuclearBombtexture);
         this.x = x;
         this.y = y;
         this.angle = angle;
@@ -89,7 +93,15 @@ public class NuclearBomb extends Bomb{
 
     public void render(SpriteBatch batch) {
         if (active) {
-            batch.draw(nuclearBombtexture, x, y, radius * 2, radius * 2);
+            batch.draw(
+                nuclearBombRegion,
+                x, y,
+                radius * 7.5f, radius * 7.5f,     // origin of rotation (center)
+                radius * 15, radius * 15,         // width and height
+                1f, 1f,                           // scaleX, scaleY
+                angle - 90                      // rotation angle (matches movement)
+            );
+
         }
     }
 }
