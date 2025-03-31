@@ -85,10 +85,11 @@ public class TankPlayer extends Game implements Gravity {
     }
     private void fire() {
         float cannonLength = 40f;
-        float cannonPivotX = 0f;
-        float cannonPivotY = 5f;
-        float cannonX = xCoordinate + 25 + cannonPivotX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
-        float cannonY = yCoordinate + 18 + cannonPivotY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+        float cannonBaseX = xCoordinate + 25;
+        float cannonBaseY = yCoordinate + 18;
+        float cannonTipX = cannonBaseX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
+        float cannonTipY = cannonBaseY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+
 
         if (useNuclearBomb) {
             //bomb adjustments
@@ -96,7 +97,7 @@ public class TankPlayer extends Game implements Gravity {
             final int bombSize = 5;
             final int bombSpeed = 300;
             final int bombDamage = 100;
-            NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonX, cannonY, rotation);
+            NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonTipX, cannonTipY, rotation);
             bomb.applyGravity();
             bombs.add(bomb);
         }
