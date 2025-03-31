@@ -20,7 +20,7 @@ public class NuclearBomb extends Bomb{
     private float x,y;   // float coordinates for smooth motion
     private float velocity_x, velocity_y;    // velocity components
     private boolean active;
-//    private static final float GRAVITY_FORMULA = -9.8f * 10;
+    private static final float GRAVITY_FORMULA = -9.8f * 10;
 
 
 
@@ -51,7 +51,7 @@ public class NuclearBomb extends Bomb{
         x += velocity_x * delta;
         y += velocity_y * delta;
 
-//        velocity_y += GRAVITY_FORMULA * delta;
+        velocity_y += GRAVITY_FORMULA * delta;
 
         if (y <= 0) {
             active = false;
@@ -97,7 +97,7 @@ public class NuclearBomb extends Bomb{
                 nuclearBombRegion,
                 x, y,
                 radius * 7.5f, radius * 7.5f,     // origin of rotation (center)
-                radius * 15, radius * 15,         // width and height
+                radius * 5, radius * 10,         // width and height
                 1f, 1f,                           // scaleX, scaleY
                 angle - 90                      // rotation angle (matches movement)
             );

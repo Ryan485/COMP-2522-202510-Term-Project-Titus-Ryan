@@ -22,7 +22,7 @@ public class TankPlayer extends Game implements Gravity {
     private int speed;
     private int money;
     private int fuel;
-    private int hp;
+    private static int hp;
     private int rotation = -1;
     private final int rotationSpeed = 1;
     private ArrayList<NuclearBomb> bombs;
@@ -45,9 +45,13 @@ public class TankPlayer extends Game implements Gravity {
         this.speed = speed;
         this.money = money;
         this.fuel = fuel;
-        this.hp = hp;
+        TankPlayer.hp = hp;
         this.bombs = new ArrayList<>();
         this.grain = grain;
+    }
+
+    public static int getHp() {
+        return hp;
     }
 
     private void moveTankLeft() {
