@@ -22,7 +22,7 @@ public class TankPlayer extends Game implements Gravity {
     private int speed;
     private int money;
     private int fuel;
-    private int hp;
+    private static int hp;
     private int rotation = -1;
     private final int rotationSpeed = 1;
     private final ArrayList<NuclearBomb> bombs;
@@ -49,9 +49,13 @@ public class TankPlayer extends Game implements Gravity {
         this.speed = speed;
         this.money = money;
         this.fuel = fuel;
-        this.hp = hp;
+        TankPlayer.hp = hp;
         this.bombs = new ArrayList<>();
         grainHeights = grain.getTerrainY();
+    }
+
+    public static int getHp() {
+        return hp;
     }
 
     private void moveTankLeft() {
@@ -109,19 +113,20 @@ public class TankPlayer extends Game implements Gravity {
         //...Code...
     }
     private void fire() {
-        final float cannonLength = 40f;
-        final float cannonPivotX = 0f;
-        final float cannonPivotY = 5f;
-        final float cannonX = xCoordinate + 25 + cannonPivotX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
-        final float cannonY = yCoordinate + 18 + cannonPivotY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
-        //bomb adjustments
-        final int damageRadius = 50;
-        final int bombSize = 5;
-        final int bombSpeed = 300;
-        final int bombDamage = 100;
+        float cannonLength = 40f;
+        float cannonBaseX = xCoordinate + 25;
+        float cannonBaseY = yCoordinate + 18;
+        float cannonTipX = cannonBaseX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
+        float cannonTipY = cannonBaseY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+
 
         if (useNuclearBomb) {
-            NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonX, cannonY, rotation);
+            //bomb adjustments
+            final int damageRadius = 50;
+            final int bombSize = 5;
+            final int bombSpeed = 300;
+            final int bombDamage = 100;
+            NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonTipX, cannonTipY, rotation);
             bomb.applyGravity();
             bombs.add(bomb);
         }
