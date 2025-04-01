@@ -28,6 +28,7 @@ public class TankPlayer extends Game implements Gravity {
     private final ArrayList<NuclearBomb> bombs;
     private boolean useNuclearBomb = true;
     private final int offset = 20;
+
     private final float[] grainHeights;
     private final int acceptableIncline = 55;
     private final int futureSight = 10 + offset;
@@ -116,8 +117,10 @@ public class TankPlayer extends Game implements Gravity {
         float cannonLength = 40f;
         float cannonBaseX = xCoordinate + 25;
         float cannonBaseY = yCoordinate + 18;
+        // for future update for bomb alignment
+        float bombAlignmentOffset = 40f;
         float cannonTipX = cannonBaseX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
-        float cannonTipY = cannonBaseY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
+        float cannonTipY = cannonBaseY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength - bombAlignmentOffset;
 
 
         if (useNuclearBomb) {
@@ -175,7 +178,7 @@ public class TankPlayer extends Game implements Gravity {
         batch = new SpriteBatch();
         tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
-        bombTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
+//        bombTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
     }
 
     /**

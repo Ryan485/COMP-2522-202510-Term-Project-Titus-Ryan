@@ -1,5 +1,8 @@
 package io.github.some_example_name;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 /**
  * Bomb is an abstract class intended to be used
  * as a superclass to all types of bombs.
@@ -25,8 +28,7 @@ public abstract class Bomb implements Gravity{
     protected float velocityX;
     protected float velocityY;
 
-    protected static final float GRAVITY = -9.8f * 10;
-
+    protected static final float GRAVITY = -9.8f * 15;
     /**
      * Constructs an object of type Bomb.
      *
