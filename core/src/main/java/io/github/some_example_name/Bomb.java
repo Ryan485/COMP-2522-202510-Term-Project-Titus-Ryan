@@ -16,11 +16,16 @@ public abstract class Bomb implements Gravity{
     /**
      * Stores how much damage this bomb deals.
      */
-    protected int damage;
+    protected float xCoordinate;
+    protected float yCoordinate;
 
+    protected int damage;
     protected int angle;
 
-    protected int yCoordinate;
+    protected float velocityX;
+    protected float velocityY;
+
+    protected static final float GRAVITY = -9.8f * 10;
 
     /**
      * Constructs an object of type Bomb.
@@ -28,7 +33,9 @@ public abstract class Bomb implements Gravity{
      * @param speed an int
      * @param damage an int
      */
-    public Bomb(final int speed, final int damage) {
+    public Bomb(final int speed, final int damage, float xCoordinate, float yCoordinate) {
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
         this.speed = speed;
         this.damage = damage;
     }
@@ -50,12 +57,32 @@ public abstract class Bomb implements Gravity{
     /**
      * Make sure the bomb obeys gravity.
      */
-    public void applyGravity() {
-        final int gravitation = 9;
-        if (yCoordinate > 0) {
-            yCoordinate -= gravitation;
-        } else if (yCoordinate < 0) {
+    public void applyGravity(float delta) {
+        // Apply gravity to velocity
+        velocityY += GRAVITY * delta;
+        // Update position using velocity
+        yCoordinate += velocityY * delta;
+
+        if (yCoordinate < 0) {
             yCoordinate = 0;
+            velocityY = 0;
         }
+    }
+
+    public float getYCoordinate() {
+        return yCoordinate;
+    }
+
+    public void setYCoordinate(float yCoordinate) {
+        this.yCoordinate = (int) yCoordinate;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
+    }
+
+    // Setter for velocityY (to allow subclasses to set initial velocity)
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
     }
 }

@@ -102,7 +102,7 @@ public class TankPlayer extends Game implements Gravity {
             final int bombSpeed = 300;
             final int bombDamage = 100;
             NuclearBomb bomb = new NuclearBomb(damageRadius, bombSize, bombSpeed, bombDamage, cannonTipX, cannonTipY, rotation);
-            bomb.applyGravity();
+            bomb.applyGravity(0.016f);
             bombs.add(bomb);
         }
     }
@@ -183,7 +183,6 @@ public class TankPlayer extends Game implements Gravity {
 
         //Bomb
         for (NuclearBomb bomb : bombs) {
-            bomb.applyGravity();
             bomb.render(batch);
         }
 

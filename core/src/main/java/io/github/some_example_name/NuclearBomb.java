@@ -17,25 +17,20 @@ public class NuclearBomb extends Bomb{
     private int radius;
     private final Texture nuclearBombtexture;
     private final TextureRegion nuclearBombRegion;
-    private float x,y;   // float coordinates for smooth motion
-    private float velocity_x, velocity_y;    // velocity components
     private boolean active;
-    private static final float GRAVITY_FORMULA = -9.8f * 10;
 
 
 
     public NuclearBomb(final int damageRadius, final int radius, final int speed,
-                       final int damage, float x, float y, int angle) {
-        super(speed, damage);
+                       final int damage, float xCoordinate, float yCoordinate, int angle) {
+        super(speed, damage, xCoordinate, yCoordinate);
         this.damageRadius = damageRadius;
         this.radius = radius;
         this.nuclearBombtexture = new Texture(Gdx.files.internal("assets/nuclear_bomb.png"));
         this.nuclearBombRegion = new TextureRegion(nuclearBombtexture);
-        this.x = x;
-        this.y = y;
         this.angle = angle;
-        this.velocity_x = (float) Math.cos(Math.toRadians(angle)) * speed;
-        this.velocity_y = (float) Math.sin(Math.toRadians(angle)) * speed;
+        this.velocityX = (float) Math.cos(Math.toRadians(angle)) * speed;
+        this.velocityY = (float) Math.sin(Math.toRadians(angle)) * speed;
         this.active = true;
     }
 
@@ -48,14 +43,13 @@ public class NuclearBomb extends Bomb{
         if (!active) return;
 
         // update position with velocity
-        x += velocity_x * delta;
-        y += velocity_y * delta;
+        xCoordinate += velocityX * delta;
 
-        velocity_y += GRAVITY_FORMULA * delta;
+        applyGravity(delta);
 
-        if (y <= 0) {
+        if (yCoordinate <= 0) {
             active = false;
-            y = 0;
+            yCoordinate = 0;
         }
     }
 
@@ -66,8 +60,8 @@ public class NuclearBomb extends Bomb{
     @Override
     public void setSpeed(final int speed) {
         this.speed = speed;
-        this.velocity_x = (float) Math.cos(Math.toRadians(angle)) * speed;
-        this.velocity_y = (float) Math.sin(Math.toRadians(angle)) * speed;
+        this.velocityX = (float) Math.cos(Math.toRadians(angle)) * speed;
+        this.velocityY = (float) Math.sin(Math.toRadians(angle)) * speed;
     }
 
     @Override
@@ -95,13 +89,14 @@ public class NuclearBomb extends Bomb{
         if (active) {
             batch.draw(
                 nuclearBombRegion,
-                x, y,
+                xCoordinate, yCoordinate,
                 radius * 7.5f, radius * 7.5f,     // origin of rotation (center)
-                radius * 5, radius * 10,         // width and height
+                radius * 5, radius * 8,         // width and height
                 1f, 1f,                           // scaleX, scaleY
                 angle - 90                      // rotation angle (matches movement)
             );
 
         }
     }
+
 }

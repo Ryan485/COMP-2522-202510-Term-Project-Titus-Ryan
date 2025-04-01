@@ -4,8 +4,8 @@ public class Volcanobomb extends Bomb {
     private int damageRadius;
     private int radius;
 
-    public Volcanobomb(int damageRadius, int radius, int speed, int damage) {
-        super(speed, damage);
+    public Volcanobomb(final int damageRadius, final int radius, final int speed, final int damage, final int xCoordinate, final int yCoordinate) {
+        super(speed, damage, xCoordinate, yCoordinate);
         this.damageRadius = damageRadius;
         this.radius = radius;
     }
@@ -22,4 +22,5 @@ public class Volcanobomb extends Bomb {
     public void setRadius(final int radius) {
         this.radius = radius;
     }
+
 }

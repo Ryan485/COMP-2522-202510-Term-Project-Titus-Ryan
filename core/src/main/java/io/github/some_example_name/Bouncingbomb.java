@@ -4,8 +4,8 @@ public class Bouncingbomb extends Bomb {
     private int damageRadius;
     private int radius;
 
-    public Bouncingbomb(final int damageRadius, final int radius, final int speed, final int damage) {
-        super(speed, damage);
+    public Bouncingbomb(final int damageRadius, final int radius, final int speed, final int damage, final int xCoordinate, final int yCoordinate) {
+        super(speed, damage, xCoordinate, yCoordinate);
         this.damageRadius = damageRadius;
         this.radius = radius;
     }
@@ -23,4 +23,5 @@ public class Bouncingbomb extends Bomb {
     public void setRadius(final int radius) {
         this.radius = radius;
     }
+
 }
