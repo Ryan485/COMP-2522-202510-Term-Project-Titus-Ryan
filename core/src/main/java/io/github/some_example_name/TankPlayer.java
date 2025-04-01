@@ -200,7 +200,6 @@ public class TankPlayer extends Game implements Gravity {
         1, 1, rotation, 0, 0, 500, 101, false, false);
 
         //Tank
-//        batch.draw(tankTexture, xCoordinate, yCoordinate, width, height);
         batch.draw(tankTexture,
             xCoordinate, yCoordinate,
             offset, 0,
