@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 
 
 /**
@@ -46,6 +47,8 @@ public class NuclearBomb extends Bomb{
         xCoordinate += velocityX * delta;
 
         applyGravity(delta);
+
+        angle = (int) (Math.atan2(velocityY, velocityX) * MathUtils.radiansToDegrees) - 1;
 
         if (yCoordinate <= 0) {
             active = false;
