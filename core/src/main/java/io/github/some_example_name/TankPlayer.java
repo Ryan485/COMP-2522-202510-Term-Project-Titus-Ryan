@@ -116,6 +116,8 @@ public class TankPlayer extends Game implements Gravity {
         float cannonLength = 40f;
         float cannonBaseX = xCoordinate + 25;
         float cannonBaseY = yCoordinate + 18;
+        // for future update for bomb alignment
+//        float bombAlignmentOffset = 40f;
         float cannonTipX = cannonBaseX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
         float cannonTipY = cannonBaseY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength;
 

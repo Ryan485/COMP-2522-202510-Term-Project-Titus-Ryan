@@ -69,6 +69,7 @@ public class NuclearBomb extends Bomb{
         this.damage = damage;
     }
 
+
     public void setRadius(final int radius) {
         this.radius = radius;
     }
