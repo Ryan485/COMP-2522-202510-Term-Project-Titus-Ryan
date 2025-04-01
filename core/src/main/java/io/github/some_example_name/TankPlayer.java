@@ -54,6 +54,10 @@ public class TankPlayer extends Game implements Gravity {
         grainHeights = grain.getTerrainY();
     }
 
+    /**
+     * The current hp on this tank.
+     * @return hp an int
+     */
     public static int getHp() {
         return hp;
     }
@@ -64,15 +68,13 @@ public class TankPlayer extends Game implements Gravity {
         float deltaY = futureY - yCoordinate;
         float deltaX = futureX - xCoordinate;
         inclineAngle = (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
+        float deviation = futureY - yCoordinate;
+        // incline check and left boarder check
+        if (deviation < acceptableIncline && xCoordinate > 10) {
+            xCoordinate -= speed;
+        }
         if (inclineAngle > 90 || inclineAngle < -90) {
             inclineAngle += 180;  // Flip the tank
-        }
-        float deviation = futureY - yCoordinate;
-        if (deviation < acceptableIncline) {
-            //left boarder check
-            if (xCoordinate > 1) {
-                xCoordinate -= speed;
-            }
         }
     }
 
@@ -82,14 +84,12 @@ public class TankPlayer extends Game implements Gravity {
         float deltaY = futureY - yCoordinate;
         float deltaX = futureX - xCoordinate;
         inclineAngle = (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
+        // incline check and right boarder check
+        if (futureY - yCoordinate < acceptableIncline && xCoordinate < Gdx.graphics.getWidth() - width) {
+            xCoordinate += speed;
+        }
         if (inclineAngle > 90 || inclineAngle < -90) {
             inclineAngle += 180;  // Flip the tank
-        }
-        if (futureY - yCoordinate < acceptableIncline) {
-            // right boarder check
-            if (xCoordinate < Gdx.graphics.getWidth() - width) {
-                xCoordinate += speed;
-            }
         }
     }
 
