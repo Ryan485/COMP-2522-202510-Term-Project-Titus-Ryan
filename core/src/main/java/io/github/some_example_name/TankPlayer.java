@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class TankPlayer extends Game implements Gravity {
     private SpriteBatch batch;
@@ -15,8 +16,9 @@ public class TankPlayer extends Game implements Gravity {
     private Texture tankTexture;
     private Texture canonTexture;
     private Texture bombTexture;
-    private float xCoordinate = 1;
-    private float yCoordinate = 1;
+    private float xCoordinate;
+    private float yCoordinate;
+    private final String control;
     private int width;
     private int height;
     private int speed;
@@ -27,11 +29,11 @@ public class TankPlayer extends Game implements Gravity {
     private final int rotationSpeed = 1;
     private final ArrayList<NuclearBomb> bombs;
     private boolean useNuclearBomb = true;
-    private final int offset = 20;
+    private final int offset = 25;
 
     private final float[] grainHeights;
     private final int acceptableIncline = 55;
-    private final int futureSight = 10 + offset;
+    private final int futureSight = 5 + offset;
     private float inclineAngle = 0;
 
     /**
@@ -43,8 +45,10 @@ public class TankPlayer extends Game implements Gravity {
      * @param fuel an int
      * @param hp an int
      */
-    public TankPlayer(final int width, final int height, final int speed,
+    public TankPlayer(final int xCoordinate, final String control, final int width, final int height, final int speed,
                       final int money, final int fuel, final int hp, final Grain grain) {
+        this.xCoordinate = xCoordinate;
+        this.control = control;
         this.width = width;
         this.height = height;
         this.speed = speed;
@@ -144,19 +148,36 @@ public class TankPlayer extends Game implements Gravity {
      * Weapon switch: Q, E
      */
     public void input() {
-        // Moving the tank
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            moveTankLeft();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            moveTankRight();
-        }
-        // Moves the canon
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            moveCanonLeft();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            moveCanonRight();
+        //Tank right
+        if (control.equals("right")) {
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                moveTankLeft();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                moveTankRight();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                moveCanonLeft();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                moveCanonRight();
+            }
+        } else if (control.equals("left")) {
+            // Moving the tank
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                moveTankLeft();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                moveTankRight();
+            }
+            //Tank left
+            // Moves the canon
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                moveCanonLeft();
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                moveCanonRight();
+            }
         }
         // Switch Weapon
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
@@ -195,12 +216,17 @@ public class TankPlayer extends Game implements Gravity {
                 iterator.remove();
             }
         }
-
         batch.begin();
-
         //Canon
-        batch.draw(canonTexture, xCoordinate + 25, yCoordinate+18, 0,  5, 40, 10,
-        1, 1, rotation, 0, 0, 500, 101, false, false);
+        batch.draw(canonTexture,
+            xCoordinate + offset, yCoordinate + 18,
+            0,5,
+            40, 10,
+            1, 1,
+            rotation,
+            0, 0,
+            canonTexture.getWidth(), canonTexture.getHeight(),
+            false, false);
 
         //Tank
         batch.draw(tankTexture,

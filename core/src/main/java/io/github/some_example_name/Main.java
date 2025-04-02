@@ -13,35 +13,46 @@ public class Main extends ApplicationAdapter {
     private Texture image;
 
     private BackgroundMap map;
-    private TankPlayer tank;
+    private TankPlayer tankOne;
+    private TankPlayer tankTwo;
     private Grain grain;
 
     @Override
     public void create() {
-        final int WIDTH = 50;
-        final int HEIGHT = WIDTH / 2;
-        final int SPEED = 1;
+        final int width = 50;
+        final int height = width / 2;
+        final int speed = 1;
         int money = 0;
         int fuel = 20;
         int hp = 100;
         // Grain
         final String type = "forest";
         final int grainSize = 1;
-
+        //All objects
         batch = new SpriteBatch();
         map = new BackgroundMap();
         map.create();
         grain = new Grain(type, grainSize);
         grain.create();
-        tank = new TankPlayer(WIDTH, HEIGHT, SPEED, money, fuel, hp, grain);
-        tank.create();
+        tankOne = new TankPlayer(map.randomX("left"), "left", width, height, speed, money, fuel, hp, grain);
+        tankOne.create();
+        tankTwo = new TankPlayer(map.randomX("right"), "right", width, height, speed, money, fuel, hp, grain);
+        tankTwo.create();
     }
 
+    /**
+     * Constant feedback and update of the object the objects.
+     */
     public void update() {
-        tank.input();
-        tank.applyGravity();
+        tankOne.input();
+        tankOne.applyGravity();
+        tankTwo.input();
+        tankTwo.applyGravity();
     }
 
+    /**
+     * Renders the objects onto the screen.
+     */
     @Override
     public void render() {
         update();
@@ -49,10 +60,14 @@ public class Main extends ApplicationAdapter {
         batch.begin();
         map.render();
         grain.render();
-        tank.render();
+        tankOne.render();
+        tankTwo.render();
         batch.end();
     }
 
+    /**
+     * Safely ends the program.
+     */
     @Override
     public void dispose() {
         batch.dispose();
