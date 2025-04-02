@@ -163,7 +163,7 @@ public class TankPlayer extends Game implements Gravity {
                 moveCanonRight();
             }
             // Fire!
-            if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_RIGHT)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 fire();
             }
         } else if (control.equals("left")) {
