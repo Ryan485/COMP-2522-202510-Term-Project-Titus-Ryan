@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Random;
+
 /**
  * Background is a class tasked with displaying a background image
  * and setting the environment interactions.
@@ -65,6 +67,23 @@ public class BackgroundMap extends Game {
         batch.draw(texture, originPtr, originPtr,
             Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
+    }
+
+    /**
+     * Create a random x coordinate either left or fight of the map/screen.
+     * @param region a String left or right
+     * @return an int presentation of a random x location
+     */
+    public int randomX(final String region) {
+        Random random = new Random();
+        final int offset = 25;
+        int lengthOfHalfOfTheMap = Gdx.graphics.getWidth() / 2;
+        if (region.equals("left")) {
+            return random.nextInt(lengthOfHalfOfTheMap) + offset;
+        } else if (region.equals("right")) {
+            return random.nextInt(lengthOfHalfOfTheMap) + lengthOfHalfOfTheMap / 2 - offset;
+        }
+        return lengthOfHalfOfTheMap;
     }
 }
 
