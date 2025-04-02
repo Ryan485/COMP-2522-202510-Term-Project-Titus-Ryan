@@ -48,7 +48,8 @@ public class NuclearBomb extends Bomb{
 
         applyGravity(delta);
 
-        angle = (int) (Math.atan2(velocityY, velocityX) * MathUtils.radiansToDegrees) - 1;
+        angle = (int)(Math.atan2(velocityY, velocityX) * MathUtils.radiansToDegrees) - 1;
+        ;
 
         if (yCoordinate <= 0) {
             active = false;
