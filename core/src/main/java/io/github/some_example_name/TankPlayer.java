@@ -162,6 +162,10 @@ public class TankPlayer extends Game implements Gravity {
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 moveCanonRight();
             }
+            // Fire!
+            if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_RIGHT)) {
+                fire();
+            }
         } else if (control.equals("left")) {
             // Moving the tank
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -178,6 +182,10 @@ public class TankPlayer extends Game implements Gravity {
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 moveCanonRight();
             }
+            // Fire!
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                fire();
+            }
         }
         // Switch Weapon
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
@@ -186,10 +194,6 @@ public class TankPlayer extends Game implements Gravity {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             switchBombRight();
         }
-        // Fire!
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            fire();
-        }
     }
 
     /**
@@ -197,7 +201,11 @@ public class TankPlayer extends Game implements Gravity {
      */
     public void create() {
         batch = new SpriteBatch();
-        tankTexture = new Texture(Gdx.files.internal("assets/tank.png"));
+        if (control.equals("left")) {
+            tankTexture = new Texture(Gdx.files.internal("assets/greenTank.png"));
+        } else if (control.equals("right")) {
+            tankTexture = new Texture(Gdx.files.internal("assets/redTank.png"));
+        }
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
 //        bombTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
     }
