@@ -83,6 +83,11 @@ public abstract class Bomb implements Gravity{
         return velocityY;
     }
 
+    public float getXCoordinate() {
+        return xCoordinate;
+    }
+
+
     // Setter for velocityY (to allow subclasses to set initial velocity)
     public void setVelocityY(float velocityY) {
         this.velocityY = velocityY;

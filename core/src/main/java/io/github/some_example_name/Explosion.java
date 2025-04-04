@@ -3,9 +3,9 @@ package io.github.some_example_name;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-.
+
 public class Explosion {
-    private Texture explosionTexture;
+    private final Texture explosionTexture;
     private float x, y;
     private float elapsedTime;
     private final float duration = 1.0f; // lasts 1 second
