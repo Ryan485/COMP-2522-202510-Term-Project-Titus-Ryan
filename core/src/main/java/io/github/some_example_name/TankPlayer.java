@@ -31,7 +31,7 @@ public class TankPlayer extends Game implements Gravity {
     private final int futureSight = 5 + offset;
     private float inclineAngle = 0;
     private Grain grain; // store a reference to the terrain
-    private final ArrayList<Explosion> explosions;
+
 
 
     /**
@@ -59,7 +59,7 @@ public class TankPlayer extends Game implements Gravity {
         this.bombs = new ArrayList<>();
         this.grain = grain; // set the terrain instance
         grainHeights = grain.getTerrainY();
-        this.explosions = new ArrayList<>();
+
 
     }
 
@@ -204,10 +204,9 @@ public class TankPlayer extends Game implements Gravity {
 
         // Update bombs by passing the grain instance
         Iterator<NuclearBomb> iterator = bombs.iterator();
-        Iterator<Explosion> explosionIterator = explosions.iterator();
         while (iterator.hasNext()) {
             NuclearBomb bomb = iterator.next();
-            bomb.update(delta, grain);  // Pass the Grain reference here
+            bomb.update(delta, grain);
             if (!bomb.isActive()) {
                iterator.remove();
             }

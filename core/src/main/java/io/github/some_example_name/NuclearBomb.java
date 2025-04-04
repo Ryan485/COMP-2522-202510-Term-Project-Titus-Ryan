@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.ArrayList;
+
 
 /**
  * A class that constitutes a nuclear bomb.
@@ -19,6 +21,7 @@ public class NuclearBomb extends Bomb{
     private final Texture nuclearBombtexture;
     private final TextureRegion nuclearBombRegion;
     private boolean active;
+    private final ArrayList<Explosion> explosions;
 
 
 
@@ -33,6 +36,7 @@ public class NuclearBomb extends Bomb{
         this.velocityX = (float) Math.cos(Math.toRadians(angle)) * speed;
         this.velocityY = (float) Math.sin(Math.toRadians(angle)) * speed;
         this.active = true;
+        this.explosions = new ArrayList<>();
     }
 
     /**
@@ -54,13 +58,16 @@ public class NuclearBomb extends Bomb{
 
         if (yCoordinate <= terrainHeight) {
             active = false;
-            yCoordinate = terrainHeight; // Align bomb with the terrain
+            yCoordinate = terrainHeight;// Align bomb with the terrain
 
             // Reduce the terrain height by 100 at the impact point
             grain.createCrater(xCoordinate, yCoordinate, 100, 100);
 
-            // Optionally, you can also trigger explosion effects or damage here
         }
+
+
+
+
     }
 
 
@@ -78,15 +85,6 @@ public class NuclearBomb extends Bomb{
     @Override
     public void setDamage(final int damage) {
         this.damage = damage;
-    }
-
-
-    public void setRadius(final int radius) {
-        this.radius = radius;
-    }
-
-    public int getDamageRadius() {
-        return damageRadius;
     }
 
     public void dispose() {
@@ -108,6 +106,9 @@ public class NuclearBomb extends Bomb{
                 angle - 90                      // rotation angle (matches movement)
             );
 
+        }
+        for (Explosion explosion : explosions) {
+            explosion.render(batch);
         }
     }
 

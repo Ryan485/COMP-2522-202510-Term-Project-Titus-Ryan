@@ -69,16 +69,6 @@ public class Grain extends Game {
         return terrainY[index] * (1 - fraction) + terrainY[nextIndex] * fraction;
     }
 
-    public void reduceHeightAt(float x, float reduction) {
-        int index = (int)(x / size);
-        if (index < 0) {
-            index = 0;
-        } else if (index >= terrainY.length) {
-            index = terrainY.length - 1;
-        }
-        terrainY[index] = Math.max(terrainY[index] - reduction, 0);
-    }
-
     public void createCrater(float bombX, float bombY, int craterRadius, float depth) {
         for (int i = 0; i < terrainX.length; i++) {
             // Calculate horizontal distance from the bomb impact

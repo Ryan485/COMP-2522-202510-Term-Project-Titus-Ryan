@@ -31,6 +31,7 @@ public class Explosion {
         }
     }
 
+
     public boolean isFinished() {
         return elapsedTime >= duration;
     }
