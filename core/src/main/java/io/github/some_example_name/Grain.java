@@ -60,6 +60,43 @@ public class Grain extends Game {
             terrainX[i] = tempXCoordinate;
         }
     }
+
+    public float getTerrainHeightAt(float x) {
+        float pos = x / size;
+        int index = (int) pos;
+        int nextIndex = Math.min(index + 1, terrainY.length - 1);
+        float fraction = pos - index;
+        return terrainY[index] * (1 - fraction) + terrainY[nextIndex] * fraction;
+    }
+
+    public void reduceHeightAt(float x, float reduction) {
+        int index = (int)(x / size);
+        if (index < 0) {
+            index = 0;
+        } else if (index >= terrainY.length) {
+            index = terrainY.length - 1;
+        }
+        terrainY[index] = Math.max(terrainY[index] - reduction, 0);
+    }
+
+    public void createCrater(float bombX, float bombY, int craterRadius, float depth) {
+        for (int i = 0; i < terrainX.length; i++) {
+            // Calculate horizontal distance from the bomb impact
+            float dx = terrainX[i] - bombX;
+            // Use the current terrain height (pillar top) at this x position
+            float dy = terrainY[i] - bombY;
+            // Compute the radial distance using both x and y differences
+            float distance = (float)Math.sqrt(dx * dx + dy * dy);
+            if (distance < craterRadius) {
+                // Use quadratic falloff for a smooth, rounded crater
+                float effect = depth * (1 - (distance / craterRadius) * (distance / craterRadius));
+                terrainY[i] = Math.max(terrainY[i] - effect, 0);
+            }
+        }
+    }
+
+
+
     /**
      * Draw the object to the screen.
      */

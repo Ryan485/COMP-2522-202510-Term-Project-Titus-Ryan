@@ -40,22 +40,28 @@ public class NuclearBomb extends Bomb{
      *
      * @param delta a float
      */
-    public void update(final float delta) {
+    public void update(final float delta, Grain grain) {
         if (!active) return;
 
-        // update position with velocity
+        // Update bomb position
         xCoordinate += velocityX * delta;
-
         applyGravity(delta);
-
         angle = (int)(Math.atan2(velocityY, velocityX) * MathUtils.radiansToDegrees) - 1;
-        ;
 
-        if (yCoordinate <= 0) {
+        // Check terrain height from the Grain instance
+        float terrainHeight = grain.getTerrainHeightAt(xCoordinate);
+
+        if (yCoordinate <= terrainHeight) {
             active = false;
-            yCoordinate = 0;
+            yCoordinate = terrainHeight; // Align bomb with the terrain
+
+            // Reduce the terrain height by 100 at the impact point
+            grain.createCrater(xCoordinate, yCoordinate, 100, 100);
+
+            // Optionally, you can also trigger explosion effects or damage here
         }
     }
+
 
     public void setDamageRadius(final int damageRadius) {
         this.damageRadius = damageRadius;

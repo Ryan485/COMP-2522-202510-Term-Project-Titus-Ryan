@@ -5,17 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 public class TankPlayer extends Game implements Gravity {
     private SpriteBatch batch;
-//    private Sprite sprite;
     private Texture tankTexture;
     private Texture canonTexture;
-    private Texture bombTexture;
     private float xCoordinate;
     private float yCoordinate;
     private final String control;
@@ -30,20 +26,23 @@ public class TankPlayer extends Game implements Gravity {
     private final ArrayList<NuclearBomb> bombs;
     private boolean useNuclearBomb = true;
     private final int offset = 25;
-
     private final float[] grainHeights;
     private final int acceptableIncline = 55;
     private final int futureSight = 5 + offset;
     private float inclineAngle = 0;
+    private Grain grain; // store a reference to the terrain
 
     /**
      * Constructs the tank.
-     * @param width an int
-     * @param height an int
-     * @param speed an int
-     * @param money an int
-     * @param fuel an int
-     * @param hp an int
+     * @param xCoordinate the x coordinate of the tank
+     * @param control the control identifier ("left" or "right")
+     * @param width the width of the tank
+     * @param height the height of the tank
+     * @param speed the movement speed of the tank
+     * @param money the starting money
+     * @param fuel the starting fuel
+     * @param hp the starting health points
+     * @param grain the Grain instance representing the terrain
      */
     public TankPlayer(final int xCoordinate, final String control, final int width, final int height, final int speed,
                       final int money, final int fuel, final int hp, final Grain grain) {
@@ -56,45 +55,40 @@ public class TankPlayer extends Game implements Gravity {
         this.fuel = fuel;
         TankPlayer.hp = hp;
         this.bombs = new ArrayList<>();
+        this.grain = grain; // set the terrain instance
         grainHeights = grain.getTerrainY();
     }
 
-    /**
-     * The current hp on this tank.
-     * @return hp an int
-     */
     public static int getHp() {
         return hp;
     }
 
     private void moveTankLeft() {
-        float futureY = grainHeights[(int) xCoordinate + offset - futureSight];
+        float futureY = grainHeights[(int)xCoordinate + offset - futureSight];
         float futureX = xCoordinate - futureSight;
         float deltaY = futureY - yCoordinate;
         float deltaX = futureX - xCoordinate;
         inclineAngle = (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
         float deviation = futureY - yCoordinate;
-        // incline check and left boarder check
         if (deviation < acceptableIncline && xCoordinate > 10) {
             xCoordinate -= speed;
         }
         if (inclineAngle > 90 || inclineAngle < -90) {
-            inclineAngle += 180;  // Flip the tank
+            inclineAngle += 180;
         }
     }
 
     private void moveTankRight() {
-        float futureY = grainHeights[(int) xCoordinate + offset + futureSight];
+        float futureY = grainHeights[(int)xCoordinate + offset + futureSight];
         float futureX = xCoordinate + futureSight;
         float deltaY = futureY - yCoordinate;
         float deltaX = futureX - xCoordinate;
         inclineAngle = (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
-        // incline check and right boarder check
         if (futureY - yCoordinate < acceptableIncline && xCoordinate < Gdx.graphics.getWidth() - width) {
             xCoordinate += speed;
         }
         if (inclineAngle > 90 || inclineAngle < -90) {
-            inclineAngle += 180;  // Flip the tank
+            inclineAngle += 180;
         }
     }
 
@@ -111,24 +105,23 @@ public class TankPlayer extends Game implements Gravity {
             rotation -= rotationSpeed;
         }
     }
-    private void switchBombLeft(){
+
+    private void switchBombLeft() {
         //...Code...
     }
+
     private void switchBombRight() {
         //...Code...
     }
+
     private void fire() {
         float cannonLength = 40f;
         float cannonBaseX = xCoordinate + 25;
         float cannonBaseY = yCoordinate + 18;
-        // for future update for bomb
-        float bombAlignmentOffset = 40f;
+        float bombAlignmentOffset = 30f;
         float cannonTipX = cannonBaseX + (float) Math.cos(Math.toRadians(rotation)) * cannonLength;
         float cannonTipY = cannonBaseY + (float) Math.sin(Math.toRadians(rotation)) * cannonLength - bombAlignmentOffset;
-
-
         if (useNuclearBomb) {
-            //bomb adjustments
             final int damageRadius = 50;
             final int bombSize = 5;
             final int bombSpeed = 300;
@@ -140,15 +133,9 @@ public class TankPlayer extends Game implements Gravity {
     }
 
     /**
-     * Check for user input and executes appropriate commands.
-     * Tank has:
-     * Move tank left and right: A, D
-     * Move canon up and down: W, S
-     * Fire: SpaceBar
-     * Weapon switch: Q, E
+     * Processes input for moving and firing the tank.
      */
     public void input() {
-        //Tank right
         if (control.equals("right")) {
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 moveTankLeft();
@@ -162,32 +149,26 @@ public class TankPlayer extends Game implements Gravity {
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 moveCanonRight();
             }
-            // Fire!
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 fire();
             }
         } else if (control.equals("left")) {
-            // Moving the tank
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 moveTankLeft();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 moveTankRight();
             }
-            //Tank left
-            // Moves the canon
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 moveCanonLeft();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 moveCanonRight();
             }
-            // Fire!
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 fire();
             }
         }
-        // Switch Weapon
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             switchBombLeft();
         }
@@ -197,7 +178,7 @@ public class TankPlayer extends Game implements Gravity {
     }
 
     /**
-     * Create all objects for a tank.
+     * Creates textures and objects for the tank.
      */
     public void create() {
         batch = new SpriteBatch();
@@ -207,36 +188,38 @@ public class TankPlayer extends Game implements Gravity {
             tankTexture = new Texture(Gdx.files.internal("assets/redTank.png"));
         }
         canonTexture = new Texture(Gdx.files.internal("assets/canon.png"));
-//        bombTexture = new Texture(Gdx.files.internal("assets/bomb.png"));
     }
 
     /**
-     * Draw the objects to the screen.
+     * Renders the tank, its cannon, and active bombs.
+     * The bomb update method now receives the Grain instance so that when a bomb hits the terrain,
+     * it can reduce the height accordingly.
      */
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
 
+        // Update bombs by passing the grain instance
         Iterator<NuclearBomb> iterator = bombs.iterator();
         while (iterator.hasNext()) {
             NuclearBomb bomb = iterator.next();
-            bomb.update(delta);
+            bomb.update(delta, grain);  // Pass the Grain reference here
             if (!bomb.isActive()) {
                 iterator.remove();
             }
         }
+
         batch.begin();
-        //Canon
+        // Render canon
         batch.draw(canonTexture,
             xCoordinate + offset, yCoordinate + 18,
-            0,5,
+            0, 5,
             40, 10,
             1, 1,
             rotation,
             0, 0,
             canonTexture.getWidth(), canonTexture.getHeight(),
             false, false);
-
-        //Tank
+        // Render tank
         batch.draw(tankTexture,
             xCoordinate, yCoordinate,
             offset, 0,
@@ -246,7 +229,7 @@ public class TankPlayer extends Game implements Gravity {
             0, 0,
             tankTexture.getWidth(), tankTexture.getHeight(),
             false, false);
-        //Bomb
+        // Render bombs
         for (NuclearBomb bomb : bombs) {
             bomb.render(batch);
         }
@@ -254,20 +237,11 @@ public class TankPlayer extends Game implements Gravity {
     }
 
     /**
-     * Make sure the tank sticks to the ground.
+     * Ensures the tank is positioned on the terrain.
      */
     public void applyGravity() {
-        final int gravitation = 9;
-//        if (yCoordinate > grainHeights[(int) xCoordinate + offset]) {
-//            //creates a choppy-ness to the tank when going down
-//            yCoordinate -= gravitation;
-//        } else if (yCoordinate < grainHeights[(int) xCoordinate + offset]) {
-//            yCoordinate = grainHeights[(int) xCoordinate + offset];
-//        }
-        //Not gravity anymore
-        //if the terrain under it is destroyed, it will teleport down
-        if (yCoordinate != grainHeights[(int) xCoordinate + offset]) {
-            yCoordinate = grainHeights[(int) xCoordinate + offset];
+        if (yCoordinate != grainHeights[(int)xCoordinate + offset]) {
+            yCoordinate = grainHeights[(int)xCoordinate + offset];
         }
     }
 
@@ -279,4 +253,17 @@ public class TankPlayer extends Game implements Gravity {
         this.useNuclearBomb = useNuclearBomb;
     }
 
+    // Additional getters for damage calculations
+    public float getX() {
+        return xCoordinate;
+    }
+
+    public float getY() {
+        return yCoordinate;
+    }
+
+    public void takeDamage(int damage) {
+        hp -= damage;
+        // Optionally, add logic for when the tank is destroyed
+    }
 }
