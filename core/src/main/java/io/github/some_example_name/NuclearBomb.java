@@ -36,9 +36,10 @@ public class NuclearBomb extends Bomb{
     }
 
     /**
-     * Update the bomb's position.
+     * Update the bomb's position and terrain when it hit by a bomb
      *
      * @param delta a float
+     * @param grain terrain information
      */
     public void update(final float delta, Grain grain) {
         if (!active) return;
