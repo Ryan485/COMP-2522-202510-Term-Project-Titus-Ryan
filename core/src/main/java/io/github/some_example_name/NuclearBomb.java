@@ -60,7 +60,7 @@ public class NuclearBomb extends Bomb{
 
             // Optionally, you can also trigger explosion effects or damage here
         }
-    }.
+    }
 
 
     public void setDamageRadius(final int damageRadius) {
